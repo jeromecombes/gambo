@@ -88,7 +88,11 @@ class Student extends MyModel
 
     public function getDobAttribute($value)
     {
-        return new \DateTime($this->decrypt($value));
+        $value = $this->decrypt($value);
+        if (empty($value)) {
+            return null;
+        }
+        return new \DateTime($value);
     }
 
     public function getEmailAttribute($value)
@@ -245,7 +249,11 @@ class Student extends MyModel
 
     public function setDobAttribute($value)
     {
-        $this->attributes['dob'] = $this->encrypt($value->format('Y-n-d'));
+        if (empty($value)) {
+            $this->attributes['dob'] = $this->encrypt(null);
+        } else {
+            $this->attributes['dob'] = $this->encrypt($value->format('Y-n-d'));
+        }
     }
 
     public function setEmailAttribute($value)
