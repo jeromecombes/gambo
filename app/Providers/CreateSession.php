@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use Auth;
 use App\Models\Student;
+use App\Models\UserCode;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -28,6 +30,9 @@ class CreateSession
      */
     public function handle(Login $event)
     {
+
+        auth()->user()->generateCode();
+
         // For students only
         if (!$event->user->admin) {
             $student = Student::where('user_id', $event->user->id)->first();

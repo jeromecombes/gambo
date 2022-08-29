@@ -46,6 +46,7 @@ class Kernel extends HttpKernel
 
         'admin' => [
             'auth',
+            '2fa',
             'is.admin',
             'student.list',
         ],
@@ -74,5 +75,6 @@ class Kernel extends HttpKernel
         'student.list' => \App\Http\Middleware\StudentList::class,
         'this.student' => \App\Http\Middleware\ThisStudent::class,
         'role' => \App\Http\Middleware\CheckRole::class,
+        '2fa' => \App\Http\Middleware\Check2FA::class,
     ];
 }
