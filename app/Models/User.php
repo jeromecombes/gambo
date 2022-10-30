@@ -6,12 +6,14 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Http\Traits\CryptTrait;
+use App\Mail\Send2FACode;
 use App\Models\Student;
 use Exception;
-use Twilio\Rest\Client;
+// use Twilio\Rest\Client;
 
 class User extends Authenticatable
 {
@@ -56,6 +58,13 @@ class User extends Authenticatable
         }
 
         return json_decode($value);
+    }
+
+    public function getPartialEmailAttribute($value)
+    {
+        $tab = explode('@', $this->email);
+        $partialEmail = substr($tab[0], 0, -5) . '*****@' . $tab[1];
+        return $partialEmail;
     }
 
     public function setAccessdAttribute($value)
@@ -110,11 +119,14 @@ class User extends Authenticatable
             [ 'code' => $code ]
         );
 
+        /**
         $receiverNumber = auth()->user()->phone;
         $message = "Your VWPP verification code is ". $code;
+        */
 
         try {
 
+            /**
             $account_sid = getenv("TWILIO_SID");
             $auth_token = getenv("TWILIO_TOKEN");
             $twilio_number = getenv("TWILIO_FROM");
@@ -123,9 +135,12 @@ class User extends Authenticatable
             $client->messages->create($receiverNumber, [
                 'from' => $twilio_number,
                 'body' => $message]);
+            */
 
+            Mail::to(auth()->user()->email)->send(new Send2FACode($code));
         } catch (Exception $e) {
-            info("Error: ". $e->getMessage());
+            //info("Error: ". $e->getMessage());
+            report($e);
         }
     }
 }

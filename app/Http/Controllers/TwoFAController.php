@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Session;
+use App\Helpers\IPAddressHelper;
+use App\Models\UserAgent;
 use App\Models\UserCode;
 
 class TwoFAController extends Controller
@@ -15,6 +17,7 @@ class TwoFAController extends Controller
      */
     public function index()
     {
+        auth()->user()->generateCode();
         return view('2fa');
     }
 
@@ -36,6 +39,15 @@ class TwoFAController extends Controller
 
         if (!is_null($find)) {
             Session::put('user_2fa', auth()->user()->id);
+
+            UserAgent::firstOrCreate([
+                'user_id' => auth()->user()->id,
+                'ip' => IPAddressHelper::get(),
+                'agent' => $_SERVER['HTTP_USER_AGENT'],
+            ]);
+
+            UserAgent::whereDate( 'created_at', '<=', now()->subDays(90))->delete();
+
             return redirect()->route('home');
         }
 
@@ -50,6 +62,7 @@ class TwoFAController extends Controller
     public function resend()
     {
         auth()->user()->generateCode();
-        return back()->with('success', 'We sent you code on your mobile number.');
+        $partialEmail = auth()->user()->partialEmail;
+        return back()->with('success', "We sent your code to your email address ($partialEmail).");
     }
 }

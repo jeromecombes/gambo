@@ -11,7 +11,7 @@
                     <form method="POST" action="{{ route('2fa.post') }}">
                         @csrf
 
-                        <p class="text-center">We sent code to your phone : {{ substr(auth()->user()->phone, 0, 5) . '******' . substr(auth()->user()->phone,  -2) }}</p>
+                        <p class="text-center">We sent your code to your email address ({{ auth()->user()->partialEmail }})</p>
 
                         @if ($message = Session::get('success'))
                             <div class="row">
