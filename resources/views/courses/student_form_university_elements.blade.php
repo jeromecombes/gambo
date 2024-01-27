@@ -327,8 +327,8 @@
     </fieldset>
 
     @if (!session('student') and $admin2 and !count($course->links))
-      {!! Form::open(['route' => 'courses.univ.delete', 'id' => 'delete-univ']) !!}
-      {!! Form::hidden('_method', 'DELETE') !!}
-      {!! Form::hidden('id', '', ['id' => 'delete-univ-id']) !!}
-      {!! Form::close() !!}
+      {!! Html::form()->route('courses.univ.delete')->attribute('id', 'delete-univ')->open() !!}
+      {!! Html::hidden('_method', 'DELETE') !!}
+      {!! Html::hidden('id', '')->attribute('id', 'delete-univ-id') !!}
+      {!! Html::form->close() !!}
     @endif

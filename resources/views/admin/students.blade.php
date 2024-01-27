@@ -20,9 +20,9 @@
 </table>
 
 @if($students->count())
-    {{ Form::open(array('name' => 'form1', 'url' => '/students')) }}
-    {{ Form::hidden('semester', session('semester')) }}
-    {{ Form::hidden('university', Auth::user()->university) }}
+    {{ Html::form('POST', '/students')->attribute('name', 'form1')->open() }}
+    {{ Html::hidden('semester', session('semester')) }}
+    {{ Html::hidden('university', Auth::user()->university) }}
 
     <table class='datatable' data-sort='[["1","asc"],["2","asc"]]'>
         <thead>
@@ -58,10 +58,10 @@
         @endforeach
 
     </table>
-    {{ Form::close() }}
+    {{ Html::form()->close() }}
 
     <br/>
-    {{ Form::open(array('name' => 'form2', 'url' => '/students')) }}
+    {{ Html::form('POST', '/students')->attribute('name', 'form2')->open() }}
         <div class='marginBottom'>
             For selected students :
             <select name='action' id='action' onchange='select_action("form1");' style='width:250px;' class='ui-widget-content ui-corner-all'>
@@ -71,7 +71,7 @@
             </select>
             <input type='button' id='submit_button' value='Go' disabled='disabled' onclick='submit_action("form2","form1");' class='myUI-button marginLeft' />
         </div>
-    {{ Form::close() }}
+    {{ Html::form()->close() }}
 
 @endif
 
