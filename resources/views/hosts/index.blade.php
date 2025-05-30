@@ -13,7 +13,7 @@
 
     {{ Form::open(array('name' => 'form', 'route' => 'hosts.email')) }}
 
-        <table class='datatable'>
+        <table class='datatable' data-sort='[["1","asc"],["2","asc"]]'>
 
             <thead>
                 <tr>

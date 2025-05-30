@@ -82,6 +82,7 @@ function CJPosition(object,top,left){
 
 $(function(){
   $(".datatable").each(function(){
+    $(this).addClass('display');
 
     // Tri des colonnes en fonction des classes des th
     var aoCol=[];
@@ -172,7 +173,6 @@ $(function(){
 
     // On applique le DataTable
     var CJDataTable=$(this).DataTable({
-      "bJQueryUI": true,
       "sPaginationType": "full_numbers",
       "bStateSave": saveState,
       "aLengthMenu" : [[10,25,50,75,100,-1],[10,25,50,75,100,"All"]],
@@ -187,7 +187,8 @@ $(function(){
       },
     });
 
-    $('.fg-toolbar:last').after(CJDataTable.buttons().container());
+    $('div.dt-layout-row:last').after(CJDataTable.buttons().container());
+    $('div.dt-buttons').wrap('<div style="height:25px;"></div>');
 
   });
 
