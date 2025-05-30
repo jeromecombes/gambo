@@ -293,6 +293,10 @@ select:not('.dt-input') {
 }
 
 /* DataTables */
+table.datatable {
+  background-color: #FFFFFF;
+}
+
 .dt-layout-cell {
   margin-bottom: 0;
 }
