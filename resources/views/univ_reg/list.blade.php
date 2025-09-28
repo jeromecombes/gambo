@@ -24,6 +24,10 @@
           @endforeach
           <th>Justification</th>
           <th>Motivated by the calendar</th>
+          @if ($year >= 2026)
+            <th>Primary UFR</th>
+            <th>3-5 courses</th>
+          @endif
           <th>Final Reg.</th>
           <th>Diploma</th>
           <th>Graduation Year</th>
@@ -52,6 +56,10 @@
             <td><div style='height:50px; max-height:50px; overflow:hidden' title='{{ $elem[0][18] }}'>{{ $elem[0][18] }}</div></td>
             <td><div style='height:50px; max-height:50px; overflow:hidden' title='{{ $elem[0][19] }}'>{{ $elem[0][19] }}</div></td>
             <td><div style='height:50px; max-height:50px; overflow:hidden' title='{{ $elem[0][22] }}'>{{ $elem[0][22] }}</div></td>
+            @if ($year >= 2026)
+              <td><div style='height:50px; max-height:50px; overflow:hidden' title='{{ $elem[0][23] }}'>{{ $elem[0][23] }}</div></td>
+              <td><div style='height:50px; max-height:50px; overflow:hidden' title='{{ $elem[0][24] }}'>{{ $elem[0][24] }}</div></td>
+            @endif
             <td><div style='height:50px; max-height:50px; overflow:hidden' title='{{ $elem[2] }}'>{{ $elem[2] }}</div></td>
             <td><div style='height:50px; max-height:50px; overflow:hidden' title='{{ $elem[0][1] }}'>{{ $elem[0][1] }}</div></td>
             <td><div style='height:50px; max-height:50px; overflow:hidden' title='{{ $elem[0][2] }}'>{{ $elem[0][2] }}</div></td>
