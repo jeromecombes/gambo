@@ -437,6 +437,9 @@ class CourseController extends Controller
         $user = auth()->user();
         $id = $request->id;
 
+        // Students
+        $students = Student::where('semesters', 'like', '%"' . session('semester') .'"%')->get();
+
         // Course
         $course = RHCourse::find($id);
 
@@ -456,17 +459,19 @@ class CourseController extends Controller
             ->orWhere('e2', $id)
             ->get();
 
-        foreach ($choices as $k => $v) {
-            if ($id == $v->a1 or $id == $v->a2) {
-                $choices[$k]['choice'] = "1<sup>st</sup>";
-            } elseif ($id == $v->b1 or $id == $v->b2) {
-                $choices[$k]['choice'] = "2<sup>nd</sup>";
-            } elseif ($id == $v->c1 or $id == $v->c2) {
-                $choices[$k]['choice'] = "3<sup>rd</sup>";
-            } elseif ($id == $v->d1 or $id == $v->d2) {
-                $choices[$k]['choice'] = "4<sup>th</sup>";
-            } elseif ($id == $v->e2) {
-                $choices[$k]['choice'] = "5<sup>th</sup>";
+        foreach ($choices as &$choice) {
+            $choice->lastname = $students->find($choice->student)->lastname ?? 'Unknown student';
+            $choice->firstname = $students->find($choice->student)->firstname ?? null;
+            if ($id == $choice->a1 or $id == $choice->a2) {
+                $choice->rank = "1<sup>st</sup>";
+            } elseif ($id == $choice->b1 or $id == $choice->b2) {
+                $choice->rank = "2<sup>nd</sup>";
+            } elseif ($id == $choice->c1 or $id == $choice->c2) {
+                $choice->rank = "3<sup>rd</sup>";
+            } elseif ($id == $choice->d1 or $id == $choice->d2) {
+                $choice->rank = "4<sup>th</sup>";
+            } elseif ($id == $choice->e2) {
+                $choice->rank = "5<sup>th</sup>";
             }
         }
 
@@ -481,6 +486,11 @@ class CourseController extends Controller
             ->orWhere('workshop2', $id)
             ->orWhere('workshop3', $id)
             ->get();
+
+        foreach ($assignments as &$assignment) {
+            $assignment->lastname = $students->find($assignment->student)->lastname ?? 'Unknown student';
+            $assignment->firstname = $students->find($assignment->student)->firstname ?? null;
+        }
 
         // View
         return view('courses.local_students', compact('course', 'choices', 'assignments'));

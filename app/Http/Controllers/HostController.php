@@ -99,7 +99,7 @@ class HostController extends Controller
             ->where('semester', session('semester'))
             ->first();
 
-        $student = $assignment->std ?? (object) ['lastname' => null, 'firstname' => null];
+        $student = $assignment->std ?? (object) ['lastname' => 'Unknown student', 'firstname' => null];
 
         return view('hosts.edit', compact('edit', 'host', 'student'));
     }

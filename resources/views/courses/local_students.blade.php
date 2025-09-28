@@ -24,9 +24,9 @@
         <tbody>
           @foreach ($choices as $choice)
             <tr>
-              <td>{{ $choice->std->lastname }}</td>
-              <td>{{ $choice->std->firstname }}</td>
-              <td>{!! $choice['choice'] !!}</td>
+              <td>{{ $choice->lastname }}</td>
+              <td>{{ $choice->firstname }}</td>
+              <td>{!! $choice->rank !!}</td>
             </tr>
           @endforeach
         </tbody>
@@ -49,8 +49,8 @@
         <tbody>
           @foreach($assignments as $assignment)
             <tr>
-              <td>{{ $assignment->std->lastname }}</td>
-              <td>{{ $assignment->std->firstname }}</td>
+              <td>{{ $assignment->lastname }}</td>
+              <td>{{ $assignment->firstname }}</td>
             </tr>
           @endforeach
         </tbody>
