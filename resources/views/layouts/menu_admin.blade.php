@@ -23,7 +23,11 @@
 
     @if(in_array(17, Auth::user()->access))
       <li class="@if (Request::is('univ_reg/list')) active @endif">
-        <a href='{{ asset('univ_reg/list') }}'>Univ. reg.</a>
+        @if (substr(session('semester'), -4) >= 2026)
+          <a href='{{ asset('univ_reg/list') }}'>French university</a>
+        @else
+          <a href='{{ asset('univ_reg/list') }}'>Univ. reg.</a>
+        @endif
       </li>
     @endif
 

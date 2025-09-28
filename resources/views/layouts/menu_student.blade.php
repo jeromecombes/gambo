@@ -20,7 +20,11 @@ $displayEvaluation = count($evaluations);
   </li>
 
   <li id='li1' class='@if (Request::is("*univ_reg*")) active @endif'>
-    <a href='/univ_reg'>Univ. Reg.</a>
+    @if (substr(session('semester'), -4) >= 2026)
+      <a href='/univ_reg'>French University</a>
+    @else
+      <a href='/univ_reg'>Univ. Reg.</a>
+    @endif
   </li>
 
   <li id='li3' class='@if (Request::is("*courses*")) active @endif'>

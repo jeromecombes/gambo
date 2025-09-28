@@ -179,6 +179,17 @@ input[type=email], input[type=password], input[type=text] {
   width:98%;
 }
 
+h1 {
+  font-size: 24px;
+}
+
+h2 {
+  padding: 20px 0 20px 0;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 h3 {
   margin-left: 0px;
 }

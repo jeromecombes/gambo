@@ -313,8 +313,11 @@ class StudentController extends Controller
         $student->placeOB = $request->placeOB;
         $student->countryOB = $request->countryOB;
         $student->cellphone = $request->cellphone;
+        $student->frenchphone = $request->frenchphone;
+        $student->whatsapp = $request->whatsapp;
         $student->contactlast = $request->contactlast;
         $student->contactfirst = $request->contactfirst;
+        $student->relationship = $request->relationship;
         $student->street = $request->street;
         $student->city = $request->city;
         $student->zip = $request->zip;

@@ -147,6 +147,11 @@ class Student extends MyModel
         return $this->decrypt($value);
     }
 
+    public function getFrenchphoneAttribute($value)
+    {
+        return $this->decrypt($value);
+    }
+
     public function getGenderAttribute($value)
     {
         return $this->decrypt($value);
@@ -185,6 +190,11 @@ class Student extends MyModel
         return $this->decrypt($value);
     }
 
+    public function getRelationshipAttribute($value)
+    {
+        return $this->decrypt($value);
+    }
+
     public function getResultatTCFAttribute($value)
     {
         return $this->decrypt($value);
@@ -213,6 +223,11 @@ class Student extends MyModel
     }
 
     public function getUnivregAttribute($value)
+    {
+        return $this->decrypt($value);
+    }
+
+    public function getWhatsappAttribute($value)
     {
         return $this->decrypt($value);
     }
@@ -307,6 +322,11 @@ class Student extends MyModel
         $this->attributes['frenchNumber'] = $this->encrypt($value);
     }
 
+    public function setFrenchphoneAttribute($value)
+    {
+        $this->attributes['frenchphone'] = $this->encrypt($value);
+    }
+
     public function setGenderAttribute($value)
     {
         $this->attributes['gender'] = $this->encrypt($value);
@@ -325,6 +345,11 @@ class Student extends MyModel
     public function setPlaceOBAttribute($value)
     {
         $this->attributes['placeOB'] = $this->encrypt($value);
+    }
+
+    public function setRelationshipAttribute($value)
+    {
+        $this->attributes['relationship'] = $this->encrypt($value);
     }
 
     public function setResultatTCFAttribute($value)
@@ -355,6 +380,11 @@ class Student extends MyModel
     public function setUniversity2Attribute($value)
     {
         $this->attributes['university2'] = $this->encrypt($value);
+    }
+
+    public function setWhatsappAttribute($value)
+    {
+        $this->attributes['whatsapp'] = $this->encrypt($value);
     }
 
     public function setZipAttribute($value)

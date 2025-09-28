@@ -16,7 +16,9 @@
 
   @else
 
-      @if (substr(session('semester'), -4) >= 2024)
+      @if (substr(session('semester'), -4) >= 2026)
+        @include('univ_reg.student_form_2026')
+      @elseif (substr(session('semester'), -4) >= 2024)
         @include('univ_reg.student_form_2024')
       @else
         @include('univ_reg.student_form_2019')

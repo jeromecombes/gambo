@@ -13,7 +13,11 @@
 
   @if(in_array(17, Auth::user()->access))
     <li id='li10' class='@if (Request::is("*univ_reg*")) active @endif'>
-      <a href='/univ_reg'>Univ. reg.</a>
+      @if (substr(session('semester'), -4) >= 2026)
+        <a href='/univ_reg'>French University</a>
+      @else
+        <a href='/univ_reg'>Univ. Reg.</a>
+      @endif
     </li>
   @endif
 
