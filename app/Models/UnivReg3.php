@@ -12,11 +12,13 @@ class UnivReg3 extends MyModel
     protected $table = 'univ_reg3s';
     protected $fillable = ['student', 'semester', 'university'];
 
+    // Get
     public function getUniversityAttribute($value)
     {
         return $this->decrypt($value, $this->student);
     }
 
+    // Set
     public function setUniversityAttribute($value)
     {
         $this->attributes['university'] = $this->encrypt($value, $this->student);

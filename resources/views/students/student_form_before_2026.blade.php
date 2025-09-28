@@ -355,7 +355,7 @@
 
             <tr>
               <td>Home Institution</td>
-              <td>{{ $student->home_institution }}</td>
+              <td>{{ $student->university }}</td>
             </tr>
             <tr>
               <td>Résultat TCF</td>

@@ -49,34 +49,4 @@ class MyModel extends Model
         return null;
     }
 
-    public function getDisplayNameAttribute($value)
-    {
-        if ($this->hasAttribute('firstname') and $this->hasAttribute('lastname')) {
-            return $this->firstname . ' ' . $this->lastname;
-        }
-
-        return null;
-    }
-
-    public function getResponseAttribute($value)
-    {
-        return $this->hasAttribute('response') ? $this->decrypt($value, $this->student) : null;
-    }
-
-    public function setResponseAttribute($value)
-    {
-        if ($this->hasAttribute('response')) {
-            $this->attributes['response'] = $this->encrypt($value, $this->student);
-        }
-    }
-
-    public function std()
-    {
-        return $this->hasAttribute('student') ? $this->hasOne(Student::class, 'id', 'student') : null;
-    }
-
-    public function hasAttribute($attr)
-    {
-        return Schema::hasColumn($this->getTable(), $attr);
-    }
 }

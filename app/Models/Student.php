@@ -110,6 +110,11 @@ class Student extends MyModel
         return $dob->format('d');
     }
 
+    public function getDisplayNameAttribute($value)
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
     public function getMonthAttribute($value)
     {
         if (!$this->dob) {

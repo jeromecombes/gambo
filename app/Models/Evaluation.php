@@ -12,6 +12,11 @@ class Evaluation extends MyModel
      */
     protected $fillable = ['closed', 'courseId', 'form', 'question', 'semester', 'student', 'timestamp'];
 
+    // Get
+    public function getResponseAttribute($value)
+    {
+        return $this->decrypt($value, $this->student);
+    }
 
     // Set
     public function setResponseAttribute($value)

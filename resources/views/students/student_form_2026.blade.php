@@ -365,7 +365,7 @@
 
             <tr>
               <td>Home institution</td>
-              <td>{{ $student->home_institution }}</td>
+              <td>{{ $student->university }}</td>
             </tr>
             <tr>
               <td>Language test score</td>
