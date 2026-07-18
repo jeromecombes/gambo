@@ -14,7 +14,13 @@ class RHCourseAssignment extends MyModel
     /**
      * @var array
      */
-    protected $fillable = ['student', 'semester', 'writing1', 'writing2', 'writing3', 'seminar1', 'seminar2', 'seminar3', 'workshop1', 'workshop2', 'workshop3'];
+    protected $fillable = [
+        'student', 'semester',
+        'writing1', 'writing2', 'writing3',
+        'seminar1', 'seminar2', 'seminar3',
+        'workshop1', 'workshop2', 'workshop3',
+        'art1', 'art2', 'art3',
+    ];
 
     public function std()
     {

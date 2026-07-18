@@ -147,11 +147,14 @@ class CourseController extends Controller
             if (!empty($elem->workshop1)) $tab[] = $elem->workshop1;
             if (!empty($elem->workshop2)) $tab[] = $elem->workshop2;
             if (!empty($elem->workshop3)) $tab[] = $elem->workshop3;
+            if (!empty($elem->art1)) $tab[] = $elem->art1;
+            if (!empty($elem->art2)) $tab[] = $elem->art2;
+            if (!empty($elem->art3)) $tab[] = $elem->art3;
         }
 
         $count = array_count_values($tab);
 
-        $occurences = ['Seminar' => [], 'Workshop' => [], 'Writing' => []];
+        $occurences = ['Seminar' => [], 'Workshop' => [], 'Writing' => [], 'Art' => []];
 
         foreach ($rhCourses as $elem) {
             $occurences[$elem->type][] = array(
@@ -166,6 +169,7 @@ class CourseController extends Controller
         usort($occurences['Seminar'], [$this, 'cmp_count_desc']);
         usort($occurences['Workshop'], [$this, 'cmp_count_desc']);
         usort($occurences['Writing'], [$this, 'cmp_count_desc']);
+        usort($occurences['Art'], [$this, 'cmp_count_desc']);
 
         // Student assignment IDs
         $default_assignment = (object) array(
@@ -177,19 +181,25 @@ class CourseController extends Controller
             'workshop1' => null,
             'workshop2' => null,
             'workshop3' => null,
+            'art1' => null,
+            'art2' => null,
+            'art3' => null,
         );
 
         $assignment = $rhCoursesAssign->where('student', session('student'))->first() ?? $default_assignment;
 
         // Student assignment Text
-        $aw1 = $assignment ? $rhCourses->find($assignment->writing1) :null;
-        $aw2 = $assignment ? $rhCourses->find($assignment->writing2) :null;
-        $as1 = $assignment ? $rhCourses->find($assignment->seminar1) :null;
-        $as2 = $assignment ? $rhCourses->find($assignment->seminar2) :null;
-        $as3 = $assignment ? $rhCourses->find($assignment->seminar3) :null;
-        $aws1 = $assignment ? $rhCourses->find($assignment->workshop1) :null;
-        $aws2 = $assignment ? $rhCourses->find($assignment->workshop2) :null;
-        $aws3 = $assignment ? $rhCourses->find($assignment->workshop3) :null;
+        $aw1 = $assignment ? $rhCourses->find($assignment->writing1) : null;
+        $aw2 = $assignment ? $rhCourses->find($assignment->writing2) : null;
+        $as1 = $assignment ? $rhCourses->find($assignment->seminar1) : null;
+        $as2 = $assignment ? $rhCourses->find($assignment->seminar2) : null;
+        $as3 = $assignment ? $rhCourses->find($assignment->seminar3) : null;
+        $aws1 = $assignment ? $rhCourses->find($assignment->workshop1) : null;
+        $aws2 = $assignment ? $rhCourses->find($assignment->workshop2) : null;
+        $aws3 = $assignment ? $rhCourses->find($assignment->workshop3) : null;
+        $aa1 = $assignment ? $rhCourses->find($assignment->art1) : null;
+        $aa2 = $assignment ? $rhCourses->find($assignment->art2) : null;
+        $aa3 = $assignment ? $rhCourses->find($assignment->art3) : null;
 
         $assignment_text = (object) array(
             'writing1' => $aw1 ? $aw1->code . ' ' . $aw1->title . ', ' . $aw1->professor : null,
@@ -200,6 +210,9 @@ class CourseController extends Controller
             'workshop1' => $aws1 ? $aws1->code . ' ' . $aws1->title . ', ' . $aws1->professor : null,
             'workshop2' => $aws2 ? $aws2->code . ' ' . $aws2->title . ', ' . $aws2->professor : null,
             'workshop3' => $aws3 ? $aws3->code . ' ' . $aws3->title . ', ' . $aws3->professor : null,
+            'art1' => $aa1 ? $aa1->code . ' ' . $aa1->title . ', ' . $aa1->professor : null,
+            'art2' => $aa2 ? $aa2->code . ' ' . $aa2->title . ', ' . $aa2->professor : null,
+            'art3' => $aa3 ? $aa3->code . ' ' . $aa3->title . ', ' . $aa3->professor : null,
         );
 
         // Hide final reg if no assignment (student view only)
@@ -273,6 +286,9 @@ class CourseController extends Controller
                 'workshop1' => $request->workshop1,
                 'workshop2' => $request->workshop2,
                 'workshop3' => $request->workshop3,
+                'art1' => $request->art1,
+                'art2' => $request->art2,
+                'art3' => $request->art3,
             )
         );
 
@@ -305,6 +321,10 @@ class CourseController extends Controller
                 'b3' => $request->workshop2,
                 'c3' => $request->workshop3,
                 'd3' => $request->workshop4,
+                'a4' => $request->art1,
+                'b4' => $request->art2,
+                'c4' => $request->art3,
+                'd4' => $request->art4,
             )
         );
 
@@ -447,15 +467,19 @@ class CourseController extends Controller
         $choices = CourseChoice::where('a1', $id)
             ->orWhere('a2', $id)
             ->orWhere('a3', $id)
+            ->orWhere('a4', $id)
             ->orWhere('b1', $id)
             ->orWhere('b2', $id)
             ->orWhere('b3', $id)
+            ->orWhere('b4', $id)
             ->orWhere('c1', $id)
             ->orWhere('c2', $id)
             ->orWhere('c3', $id)
+            ->orWhere('c4', $id)
             ->orWhere('d1', $id)
             ->orWhere('d2', $id)
             ->orWhere('d3', $id)
+            ->orWhere('d4', $id)
             ->orWhere('e2', $id)
             ->get();
 
@@ -485,6 +509,9 @@ class CourseController extends Controller
             ->orWhere('workshop1', $id)
             ->orWhere('workshop2', $id)
             ->orWhere('workshop3', $id)
+            ->orWhere('art1', $id)
+            ->orWhere('art2', $id)
+            ->orWhere('art3', $id)
             ->get();
 
         foreach ($assignments as &$assignment) {

@@ -51,7 +51,7 @@ class UnivRegController extends Controller
             $tab[$student->id]['lastname'] = $student->lastname;
             $tab[$student->id]['firstname'] = $student->firstname;
 
-            $tab[$student->id][0] = array(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            $tab[$student->id][0] = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
             $tab[$student->id][1] = array(null, null, null, null, null, null, null, null, null, null, null, null);
             $tab[$student->id][2] = null;
           }

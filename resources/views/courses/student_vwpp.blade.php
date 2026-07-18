@@ -28,6 +28,9 @@
       @if ($assignment_text->seminar1) <li>{{ $assignment_text->seminar1 }}</li> @endif
       @if ($assignment_text->seminar2) <li>{{ $assignment_text->seminar2 }}</li> @endif
       @if ($assignment_text->seminar3) <li>{{ $assignment_text->seminar3 }}</li> @endif
+      @if ($assignment_text->art1) <li>{{ $assignment_text->art1 }}</li> @endif
+      @if ($assignment_text->art2) <li>{{ $assignment_text->art2 }}</li> @endif
+      @if ($assignment_text->art3) <li>{{ $assignment_text->art3 }}</li> @endif
     </ul>
   </fieldset>
 @endif
