@@ -20,7 +20,7 @@ class CourseHelper
         $assignments = RHCourseAssignment::where('semester', session('semester'))->get();
 
         foreach ($courses['local'] as $k => $v) {
-            $students = array();
+            $students = [];
             $students = array_merge($students, $assignments->where('writing1', $v->id)->pluck('student')->toArray());
             $students = array_merge($students, $assignments->where('writing2', $v->id)->pluck('student')->toArray());
             $students = array_merge($students, $assignments->where('writing3', $v->id)->pluck('student')->toArray());
@@ -34,7 +34,7 @@ class CourseHelper
         }
 
         // All Courses
-        $courses['all'] = array();
+        $courses['all'] = [];
 
         foreach ($courses['local'] as $elem) {
             $courses['all'][] = $elem;
@@ -50,7 +50,7 @@ class CourseHelper
     public static function get()
     {
         // Local courses = VWPP Courses
-        $assignment = array();
+        $assignment = [];
         $a = RHCourseAssignment::findOrCreateMe();
         if ($a->writing1) { $assignment[] = $a->writing1; }
         if ($a->writing2) { $assignment[] = $a->writing2; }
@@ -67,7 +67,7 @@ class CourseHelper
         $courses['univ'] = UnivCourse::getMe();
 
         // All Courses
-        $courses['all'] = array();
+        $courses['all'] = [];
 
         foreach ($courses['local'] as $elem) {
             $courses['all'][] = $elem;

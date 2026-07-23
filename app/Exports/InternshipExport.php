@@ -21,22 +21,22 @@ class InternshipExport implements FromArray
             ->whereIn('student', $student_ids)
             ->get();
 
-        $header[] = array(
+        $header[] = [
             'Lastname',
             'Firstname',
             'Internship',
             'Comment',
-            );
+            ];
 
-        $data = array();
+        $data = [];
 
         foreach ($internships as $internship) {
-            $data[] = array(
+            $data[] = [
                 $students->find($internship->student)->lastname,
                 $students->find($internship->student)->firstname,
                 $internship->name,
                 $internship->notes,
-            );
+            ];
         }
 
         usort($data, function($a, $b) { return $a[0].$a[1].$a[2] > $b[0].$b[1].$b[2]; });

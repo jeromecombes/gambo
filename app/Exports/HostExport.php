@@ -22,7 +22,7 @@ class HostExport implements FromArray
 
         $housing = HousingAssignment::where('semester', session('semester'))->get();
 
-        $header[] = array(
+        $header[] = [
             'Lastname',
             'Firstname',
             'Address',
@@ -37,16 +37,16 @@ class HostExport implements FromArray
             'Email 2',
             'Student Lastname',
             'Student Firstname',
-            );
+            ];
 
-        $data = array();
+        $data = [];
 
         foreach ($hosts as $host) {
 
             $h = $housing->where('logement', $host->id)->first();
             $student = $h ? $students->find($h->student) : null;
 
-            $data[] = array(
+            $data[] = [
                 $host->lastname,
                 $host->firstname,
                 $host->address,
@@ -61,7 +61,7 @@ class HostExport implements FromArray
                 $host->email2,
                 ($student and in_array($student->id, $student_ids)) ? $student->lastname : null,
                 ($student and in_array($student->id, $student_ids)) ? $student->firstname : null,
-            );
+            ];
         }
 
         usort($data, function($a, $b) { return $a[0].$a[1] > $b[0].$b[1]; });

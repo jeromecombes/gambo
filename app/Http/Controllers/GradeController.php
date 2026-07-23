@@ -16,7 +16,7 @@ use Maatwebsite\Excel\Facades\Excel;
 class GradeController extends Controller
 {
 
-    private $grades = array('', 'A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F', 'Pass', 'S', 'DS', 'W');
+    private $grades = ['', 'A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F', 'Pass', 'S', 'DS', 'W'];
 
     /**
      * Create a new controller instance.
@@ -57,21 +57,21 @@ class GradeController extends Controller
         // Get student courses
         $courses = CourseHelper::get();
 
-        $default_grades = (object) array(
+        $default_grades = (object) [
             'note' => null,
             'date1' => null,
             'date2' => null,
             'grade' => null,
             'grade1' => null,
             'grade2' => null,
-        );
+        ];
 
         // Grades
         $grades_tab = $this->grades;
 
         $all_grades = Grade::getMe();
 
-        $grades = array();
+        $grades = [];
 
         foreach ($courses->local as $elem) {
             $grades['local'][$elem->id] = $all_grades->where('course', 'local')->where('course_id', $elem->id)->first() ?? $default_grades;
@@ -123,12 +123,12 @@ class GradeController extends Controller
 
         foreach ($courses as $key => $value) {
             foreach ($value as $course) {
-                $grade = Grade::firstOrCreate(array(
+                $grade = Grade::firstOrCreate([
                         'semester' => session('semester'),
                         'student' => session('student'),
                         'course' => $key,
                         'course_id' => $course->id,
-                    ));
+                    ]);
 
                 if (in_array(18, $user->access)) {
                     $grade->note = $request->{$key.'_fr_'.$course->id};

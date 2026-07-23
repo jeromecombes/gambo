@@ -23,7 +23,7 @@ class ScheduleController extends Controller
     public function index(Request $request)
     {
 
-        $courses = array();
+        $courses = [];
 
         foreach (CourseHelper::get()->all as $elem) {
             if (is_numeric($elem->day)) {

@@ -47,8 +47,8 @@ class DateController extends Controller
     public function update(Request $request)
     {
         Dates::updateOrCreate(
-            array('semester' => session('semester')),
-            array(
+            ['semester' => session('semester')],
+            [
                 'date1' => $request->date1,
                 'date2' => $request->date2,
                 'date3' => $request->date3,
@@ -57,7 +57,7 @@ class DateController extends Controller
                 'date6' => $request->date6,
                 'date7' => $request->date7,
                 'date8' => $request->date8,
-            )
+            ]
         );
 
         // View

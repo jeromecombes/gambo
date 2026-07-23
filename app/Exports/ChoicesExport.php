@@ -35,18 +35,18 @@ class ChoicesExport implements FromArray
             $courses[$k]['choices'] = $choices;
         }
 
-        $header[] = array('Type', 'Code', 'Title', 'French title', 'Professor', 'Student Lastname', 'Student Firstname', 'Student e-mail', 'Choice');
+        $header[] = ['Type', 'Code', 'Title', 'French title', 'Professor', 'Student Lastname', 'Student Firstname', 'Student e-mail', 'Choice'];
 
-        $data = array();
+        $data = [];
         foreach ($courses as $course) {
             if (empty($course['choices'])) {
-                $data[] = array(
+                $data[] = [
                     __($course->type),
                     $course->code,
                     $course->title,
                     $course->nom,
                     $course->professor,
-                );
+                ];
             } else {
                 foreach ($course['choices'] as $choice) {
                     if (!$students->find($choice->student)) {
@@ -67,7 +67,7 @@ class ChoicesExport implements FromArray
                         $student_choice = '5th';
                     }
 
-                    $data[] = array(
+                    $data[] = [
                         __($course->type),
                         $course->code,
                         $course->title,
@@ -77,7 +77,7 @@ class ChoicesExport implements FromArray
                         $students->find($choice->student)->firstname,
                         $students->find($choice->student)->email,
                         $student_choice,
-                    );
+                    ];
                 }
             }
         }

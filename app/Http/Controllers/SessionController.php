@@ -17,20 +17,20 @@ class SessionController extends Controller
     public function get(Request $request)
     {
         // Default response
-        $response = array(
+        $response = [
             'session_expired' => false,
             'session_required' => true,
             'session_lifetime' => env('SESSION_LIFETIME') ?? 120,
-        );
+        ];
 
         // Routes to ignore
-        $ignore_routes = array(
+        $ignore_routes = [
             'login',
             'logout',
             'password.confirm',
             'password.request',
             'password.reset',
-        );
+        ];
 
         // Requested route
         $route = app('router')->getRoutes()->match(app('request')->create($request->server('HTTP_REFERER')))->getName();

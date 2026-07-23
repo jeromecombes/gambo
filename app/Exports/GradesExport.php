@@ -20,7 +20,7 @@ class GradesExport implements FromArray
 
         $grades = Grade::where('semester', session('semester'))->get();
 
-        $header[] = array(
+        $header[] = [
             'University',
             'Code',
             'Type / Level',
@@ -36,9 +36,9 @@ class GradesExport implements FromArray
             'Actual Grade',
             'Reported Grade',
             'Date recorded',
-            );
+            ];
 
-        $data = array();
+        $data = [];
 
         foreach ($courses->local as $course) {
             foreach ($course->students as $student) {
@@ -51,7 +51,7 @@ class GradesExport implements FromArray
                     ->where('student', $student)
                     ->first();
 
-                $data[] = array(
+                $data[] = [
                     'VWPP',
                     $course->code,
                     $course->type,
@@ -67,7 +67,7 @@ class GradesExport implements FromArray
                     $grade->grade2,
                     $grade->grade,
                     $grade->date2,
-                );
+                ];
             }
         }
 
@@ -83,7 +83,7 @@ class GradesExport implements FromArray
                 ->where('student', $student)
                 ->first();
 
-            $data[] = array(
+            $data[] = [
                 $course->institution,
                 $course->code,
                 $course->type,
@@ -99,7 +99,7 @@ class GradesExport implements FromArray
                 $grade->grade2,
                 $grade->grade,
                 $grade->date2,
-            );
+            ];
         }
 
         usort($data, function($a, $b) { return $a[0].$a[1].$a[3].$a[7].$a[8] > $b[0].$b[1].$b[3].$b[7].$b[8]; });

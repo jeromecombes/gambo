@@ -15,11 +15,11 @@ class HousingAssignment extends MyModel
     public function scopeWithStudents($query)
     {
         $query->leftjoin('students', 'students.id', '=', 'housing_affect.student')
-            ->addSelect(array(
+            ->addSelect([
                 'students.id as id',
                 'students.lastname as lastname',
                 'students.firstname as firstname',
-            ));
+            ]);
     }
 
     public function getHostAttribute($value)

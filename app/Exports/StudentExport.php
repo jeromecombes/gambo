@@ -23,7 +23,7 @@ class StudentExport implements FromArray
 
         $univ_reg = UnivReg3::where('semester', session('semester'))->get();
 
-        $header[] = array(
+        $header[] = [
             'Lastname',
             'Firstname',
             'Gender',
@@ -60,9 +60,9 @@ class StudentExport implements FromArray
             'H Firstname 2',
             'H Cellphone 2',
             'H Email 2',
-            );
+            ];
 
-        $data = array();
+        $data = [];
 
         foreach ($students as $student) {
 
@@ -71,7 +71,7 @@ class StudentExport implements FromArray
 
             $french_univ = $univ_reg->where('student', $student->id)->first()->university ?? null;
 
-            $data[] = array(
+            $data[] = [
                 $student->firstname,
                 $student->lastname,
                 $student->gender,
@@ -108,7 +108,7 @@ class StudentExport implements FromArray
                 $host->firstname2 ?? null,
                 $host->cellphone2 ?? null,
                 $host->email2 ?? null,
-            );
+            ];
         }
 
         usort($data, function($a, $b) { return $a[0].$a[1] > $b[0].$b[1]; });

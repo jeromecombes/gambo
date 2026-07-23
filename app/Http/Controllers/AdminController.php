@@ -32,7 +32,7 @@ class AdminController extends Controller
         $request->session()->forget('students');
 
         $oldestYear = date('Y') - 5;
-        $semesters = array('' => '');
+        $semesters = ['' => ''];
         for ($i = date('Y')+1; $i >= $oldestYear; $i--){
             $semesters["Fall $i"] = "Fall $i";
             $semesters["Spring $i"] = "Spring $i";
