@@ -9,7 +9,7 @@ class EvaluationHelper
     {
         switch ($form) {
             case 'internship' :
-                return array(
+                return [
                     "Your name",
                     "Your University",
                     "Place of internship",
@@ -51,11 +51,11 @@ class EvaluationHelper
                     "Perks 4",
                     "12. Observations",
                     "I authorize program fo quote ...",
-                );
+                ];
                 break;
 
             case 'linguistic' :
-                return array(
+                return [
                     "1a. Did you attend every session",
                     "1b. Why not",
                     "2a. Mastery of French language",
@@ -64,11 +64,11 @@ class EvaluationHelper
                     "4. Suggestions",
                     "5. Comments",
                     "Name",
-                );
+                ];
                 break;
 
             case 'local' :
-                return array (
+                return  [
                     "Course Name",
                     "Instructor",
                     "1. Efforts",
@@ -101,11 +101,11 @@ class EvaluationHelper
                     "9. Comments",
                     "10. Observations and comments",
                     "Student name",
-                );
+                ];
                 break;
 
             case 'method' :
-                return array(
+                return [
                     "1a. Did you attend every session",
                     "1b. Why not",
                     "2a. Mastery of French language",
@@ -114,11 +114,11 @@ class EvaluationHelper
                     "4. Suggestions",
                     "5. Comments",
                     "Name",
-                );
+                ];
                 break;
 
             case 'program' :
-                return array (
+                return  [
                     "1. Main benefits",
                     "2. Is there anything you would have done differently",
                     "3. What did you learn about the French university",
@@ -175,11 +175,11 @@ class EvaluationHelper
                     "17. Advice to students",
                     "18. Comments",
                     "Student name",
-                );
+                ];
                 break;
 
             case 'tutoring' :
-                return array(
+                return [
                     "Instructor",
                     "1a. Did you attend every session",
                     "1b. Why not",
@@ -188,11 +188,11 @@ class EvaluationHelper
                     "3. Aspect of tutorats most helpful",
                     "4. Suggestions",
                     "Name",
-                );
+                ];
                 break;
 
             case 'univ' :
-                return array(
+                return [
                     "Name of couse",
                     "Course Code",
                     "Institution",
@@ -226,7 +226,7 @@ class EvaluationHelper
                     "9. Comments",
                     "10. Other comments",
                     "Student name",
-                );
+                ];
                 break;
         }
     }

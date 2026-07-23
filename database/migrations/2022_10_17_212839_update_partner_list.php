@@ -15,7 +15,7 @@ class UpdatePartnerList extends Migration
     public function up()
     {
         // Serie 1
-        $serie1 = array(
+        $serie1 = [
             'Spring 2018',
             'Fall 2018',
             'Spring 2019',
@@ -25,13 +25,13 @@ class UpdatePartnerList extends Migration
             'Spring 2021',
             'Fall 2021',
             'Spring 2022'
-        );
+        ];
 
-        $replace = array(
+        $replace = [
             'Université Paris III' => 'Paris 3',
             'Université Paris IV' => 'Paris 4',
             'Université Paris VII' => 'Paris 7',
-	);
+	];
 
 	$keys = array_keys($replace);
 
@@ -45,11 +45,11 @@ class UpdatePartnerList extends Migration
         }
 
 	// Serie 2
-        $replace = array(
+        $replace = [
             'Université Paris III' => 'Sorbonne Nouvelle',
             'Université Paris IV' => 'Sorbonne Université',
             'Université Paris VII' => 'Paris Cité',
-	);
+	];
 
 	$keys = array_keys($replace);
 
@@ -71,7 +71,7 @@ class UpdatePartnerList extends Migration
     public function down()
     {
         // Serie 1
-        $serie1 = array(
+        $serie1 = [
             'Spring 2018',
             'Fall 2018',
             'Spring 2019',
@@ -81,13 +81,13 @@ class UpdatePartnerList extends Migration
             'Spring 2021',
             'Fall 2021',
             'Spring 2022'
-        );
+        ];
 
-        $replace = array(
+        $replace = [
             'Paris 3' => 'Université Paris III',
             'Paris 4' => 'Université Paris IV',
             'Paris 7' => 'Université Paris VII',
-	);
+	];
 
 	$keys = array_keys($replace);
 
@@ -101,11 +101,11 @@ class UpdatePartnerList extends Migration
         }
 
 	// Serie 2
-        $replace = array(
+        $replace = [
             'Sorbonne Nouvelle' => 'Université Paris III',
             'Sorbonne Université' => 'Université Paris IV',
             'Paris Cité' => 'Université Paris VII',
-	);
+	];
 
 	$keys = array_keys($replace);
 

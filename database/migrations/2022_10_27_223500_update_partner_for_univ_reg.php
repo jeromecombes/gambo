@@ -14,7 +14,7 @@ class UpdatePartnerForUnivReg extends Migration
      */
     public function up()
     {
-        $serie1 = array(
+        $serie1 = [
             'Spring 2018',
             'Fall 2018',
             'Spring 2019',
@@ -24,14 +24,14 @@ class UpdatePartnerForUnivReg extends Migration
             'Spring 2021',
             'Fall 2021',
             'Spring 2022'
-        );
+        ];
 
-        $replace = array(
+        $replace = [
             'Paris 3' => 'Sorbonne Nouvelle',
             'Paris 4' => 'Sorbonne Université',
             'Paris 7' => 'Paris Cité',
             'Paris 12' => 'UPEC',
-        );
+        ];
 
         $keys = array_keys($replace);
 
@@ -52,7 +52,7 @@ class UpdatePartnerForUnivReg extends Migration
      */
     public function down()
     {
-        $serie1 = array(
+        $serie1 = [
             'Spring 2018',
             'Fall 2018',
             'Spring 2019',
@@ -62,14 +62,14 @@ class UpdatePartnerForUnivReg extends Migration
             'Spring 2021',
             'Fall 2021',
             'Spring 2022'
-        );
+        ];
 
-        $replace = array(
+        $replace = [
             'Sorbonne Nouvelle' => 'Paris 3',
             'Sorbonne Université' => 'Paris 4',
             'Paris Cité' => 'Paris 7',
             'UPEC' => 'Paris 12',
-        );
+        ];
 
         $keys = array_keys($replace);
 

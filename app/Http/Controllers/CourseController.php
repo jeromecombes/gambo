@@ -86,10 +86,10 @@ class CourseController extends Controller
      */
     public function home(Request $request)
     {
-        $courses = (object) array(
+        $courses = (object) [
             'local' => RHCourse::where('semester', session('semester'))->get(),
             'univ' => UnivCourse::where('semester', session('semester'))->get(),
-        );
+        ];
 
         // View
         return view('courses.home', compact('courses'));
@@ -136,7 +136,7 @@ class CourseController extends Controller
         $rhCoursesAssign = RHCourseAssignment::where('semester', session('semester'))->get();
 
         // Count all
-        $tab = array();
+        $tab = [];
         foreach ($rhCoursesAssign as $elem) {
             if (!empty($elem->writing1)) $tab[] = $elem->writing1;
             if (!empty($elem->writing2)) $tab[] = $elem->writing2;
@@ -157,13 +157,13 @@ class CourseController extends Controller
         $occurences = ['Seminar' => [], 'Workshop' => [], 'Writing' => [], 'Art' => []];
 
         foreach ($rhCourses as $elem) {
-            $occurences[$elem->type][] = array(
+            $occurences[$elem->type][] = [
                 'count' => isset($count[$elem->id]) ? (int) $count[$elem->id] : 0,
                 'code' => $elem->code,
                 'title' => $elem->title,
                 'professor' => $elem->professor,
                 'type' => $elem->type
-            );
+            ];
         }
 
         usort($occurences['Seminar'], [$this, 'cmp_count_desc']);
@@ -172,7 +172,7 @@ class CourseController extends Controller
         usort($occurences['Art'], [$this, 'cmp_count_desc']);
 
         // Student assignment IDs
-        $default_assignment = (object) array(
+        $default_assignment = (object) [
             'writing1' => null,
             'writing2' => null,
             'seminar1' => null,
@@ -184,7 +184,7 @@ class CourseController extends Controller
             'art1' => null,
             'art2' => null,
             'art3' => null,
-        );
+        ];
 
         $assignment = $rhCoursesAssign->where('student', session('student'))->first() ?? $default_assignment;
 
@@ -201,7 +201,7 @@ class CourseController extends Controller
         $aa2 = $assignment ? $rhCourses->find($assignment->art2) : null;
         $aa3 = $assignment ? $rhCourses->find($assignment->art3) : null;
 
-        $assignment_text = (object) array(
+        $assignment_text = (object) [
             'writing1' => $aw1 ? $aw1->code . ' ' . $aw1->title . ', ' . $aw1->professor : null,
             'writing2' => $aw2 ? $aw2->code . ' ' . $aw2->title . ', ' . $aw2->professor : null,
             'seminar1' => $as1 ? $as1->code . ' ' . $as1->title . ', ' . $as1->professor : null,
@@ -213,7 +213,7 @@ class CourseController extends Controller
             'art1' => $aa1 ? $aa1->code . ' ' . $aa1->title . ', ' . $aa1->professor : null,
             'art2' => $aa2 ? $aa2->code . ' ' . $aa2->title . ', ' . $aa2->professor : null,
             'art3' => $aa3 ? $aa3->code . ' ' . $aa3->title . ', ' . $aa3->professor : null,
-        );
+        ];
 
         // Hide final reg if no assignment (student view only)
         if ($assignment == $default_assignment) {
@@ -272,11 +272,11 @@ class CourseController extends Controller
      */
     public function reidhall_assignment(Request $request)
     {
-        RHCourseAssignment::updateOrCreate(array(
+        RHCourseAssignment::updateOrCreate([
                 'student' => session('student'),
                 'semester' => session('semester'),
-            ),
-            array(
+            ],
+            [
                 'writing1' => $request->writing1,
                 'writing2' => $request->writing2,
                 'writing3' => $request->writing3,
@@ -289,7 +289,7 @@ class CourseController extends Controller
                 'art1' => $request->art1,
                 'art2' => $request->art2,
                 'art3' => $request->art3,
-            )
+            ]
         );
 
         return redirect("/courses")->with('success', 'Mise à jour réussie');
@@ -303,11 +303,11 @@ class CourseController extends Controller
      */
     public function reidhall_choices(Request $request)
     {
-        CourseChoice::updateOrCreate(array(
+        CourseChoice::updateOrCreate([
                 'student' => session('student'),
                 'semester' => session('semester'),
-            ),
-            array(
+            ],
+            [
                 'a1' => $request->writing1,
                 'b1' => $request->writing2,
                 'c1' => $request->writing3,
@@ -325,7 +325,7 @@ class CourseController extends Controller
                 'b4' => $request->art2,
                 'c4' => $request->art3,
                 'd4' => $request->art4,
-            )
+            ]
         );
 
         return redirect("/courses")->with('success', 'Mise à jour réussie');
@@ -343,12 +343,12 @@ class CourseController extends Controller
 
         $id = $request->id ?? 0;
 
-        $days = array('' => '');
+        $days = ['' => ''];
         for ($i = 0; $i < 7; $i++) {
             $days[$i] = jddayofweek($i, 1);
         }
 
-        $hours = array('' => '');
+        $hours = ['' => ''];
         for($i =8; $i <23; $i++) {
             for($j=0; $j<60; $j = $j+15) {
                 $hours[sprintf("%02d",$i).":".sprintf("%02d",$j)] = sprintf("%02d",$i)."h".sprintf("%02d",$j);
@@ -390,7 +390,7 @@ class CourseController extends Controller
                 ->get();
 
             if (count($choices)) {
-                $tab = array();
+                $tab = [];
                 foreach ($choices as $elem) {
                     $tab[] = "- " . $students->find($elem->student)->displayName;
                 }

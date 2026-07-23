@@ -70,7 +70,7 @@ class HousingController extends Controller
             $students = Student::where('semester', session('semester'))->get();
         } else {
             // Filter students if loged in admin is from Vassar or Wesleyan
-            $students = Student::where(array('semester' => session('semester'), 'university' => $user->university))->get();
+            $students = Student::where(['semester' => session('semester'), 'university' => $user->university])->get();
         }
 
         // Questions
@@ -80,7 +80,7 @@ class HousingController extends Controller
         // Answers
         $housing = Housing::where('semester', session('semester'))->get();
 
-        $answers = array();
+        $answers = [];
         foreach ($housing as $elem) {
             $answers[$elem['student']][$elem['question']] = $elem['response'];
 
@@ -119,10 +119,10 @@ class HousingController extends Controller
      */
     public function accept_terms(Request $request)
     {
-        HousingTerm::updateOrCreate(array(
+        HousingTerm::updateOrCreate([
             'semester' => session('semester'),
             'student' => session('student'),
-        ));
+        ]);
 
         return response()->json(['ok' => 'ok']);
     }
@@ -167,7 +167,7 @@ class HousingController extends Controller
         // Get housing's answers
         $housing = Housing::getMe();
 
-        $answer = array();
+        $answer = [];
         for ($i = 1; $i <=32; $i++) {
             $h = $housing->where('question', $i)->first();
             $answer[$i] = $h ? $h->response : null;
@@ -216,13 +216,13 @@ class HousingController extends Controller
     {
 
         HousingAssignment::updateOrCreate(
-            array(
+            [
                 'student' => $request->student,
                 'semester' => session('semester'),
-            ),
-            array(
+            ],
+            [
                 'logement' => $request->host,
-            )
+            ]
         );
 
         return redirect("/housing")->with('success', 'Mise à jour réussie');
@@ -300,7 +300,7 @@ class HousingController extends Controller
         $year = substr($semester, -4);
 
         if ($year < 2020) {
-            $questions=array();
+            $questions=[];
             $questions[1]="Group flight";
             $questions[3]="Housing Arranged by VWPP";
             $questions[4]="With whom and where you will be living";
@@ -332,7 +332,7 @@ class HousingController extends Controller
             $questions[31]="2. Collocation";
             $questions[32]="Other information";
         } else {
-            $questions=array();
+            $questions=[];
             $questions[1]="Group flight";
             $questions[3]="Housing Arranged by VWPP";
             $questions[4]="With whom and where you will be living";

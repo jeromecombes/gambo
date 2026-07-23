@@ -7,7 +7,7 @@ class MimeTypeHelper
 
     public static function getExtension($mimeType)
     {
-        $extensions = array(
+        $extensions = [
             'audio/aac' => '.aac',
             'application/x-abiword' => '.abw',
             'application/x-freearc' => '.arc',
@@ -79,7 +79,7 @@ class MimeTypeHelper
             'video/3gpp2' => '.3g2',
             'audio/3gpp2' => '.3g2',
             'application/x-7z-compressed' => '.7z',
-        );
+        ];
 
         return array_key_exists($mimeType, $extensions) ? $extensions[$mimeType] : null;
     }

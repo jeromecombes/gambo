@@ -102,37 +102,37 @@ class StudentController extends Controller
         }
 
         // Dropdown menu under the student list
-        $options = array();
-        $options[] = (object) array('value' => '', 'text' => null);
-        $options[] = (object) array('value' => 'Excel', 'text' => 'Export General Info to Excel');
+        $options = [];
+        $options[] = (object) ['value' => '', 'text' => null];
+        $options[] = (object) ['value' => 'Excel', 'text' => 'Export General Info to Excel'];
         if (in_array(17, $user->access)) {
-            $options[] = (object) array('value' => 'Univ_reg', 'text' => 'Export Univ. Reg. to Excel');
+            $options[] = (object) ['value' => 'Univ_reg', 'text' => 'Export Univ. Reg. to Excel'];
         }
         if (in_array(23, $user->access)) {
-            $options[] = (object) array('value' => 'internship', 'text' => 'Export Internship to Excel');
-            $options[] = (object) array('value' => 'tutoring', 'text' => 'Export Tutoring to Excel');
+            $options[] = (object) ['value' => 'internship', 'text' => 'Export Internship to Excel'];
+            $options[] = (object) ['value' => 'tutoring', 'text' => 'Export Tutoring to Excel'];
         }
-        $options[] = (object) array('value' => 'Email', 'text' => 'Send email (with Email Program)');
-        $options[] = (object) array('value' => 'Email2', 'text' => 'Send email (with Web Browser)');
+        $options[] = (object) ['value' => 'Email', 'text' => 'Send email (with Email Program)'];
+        $options[] = (object) ['value' => 'Email2', 'text' => 'Send email (with Web Browser)'];
         if (in_array(4, $user->access)) {
-            $options[] = (object) array('value' => 'CreatePassword', 'text' => 'Send emails with passwords');
+            $options[] = (object) ['value' => 'CreatePassword', 'text' => 'Send emails with passwords'];
         }
         if (in_array(5, $user->access)) {
-        $options[] = (object) array('value' => 'Delete', 'text' => 'Delete');
+        $options[] = (object) ['value' => 'Delete', 'text' => 'Delete'];
         }
         if (in_array(7, $user->access)) {
-            $options[] = (object) array('value' => 'closeHousing', 'text' => 'Close housing');
-            $options[] = (object) array('value' => 'openHousing', 'text' => 'Open housing');
+            $options[] = (object) ['value' => 'closeHousing', 'text' => 'Close housing'];
+            $options[] = (object) ['value' => 'openHousing', 'text' => 'Open housing'];
         }
         if (in_array(16, $user->access)) {
-            $options[] = (object) array('value' => 'lockVWPP', 'text' => 'Lock VWPP Courses reg.');
-            $options[] = (object) array('value' => 'unlockVWPP', 'text' => 'Unlock VWPP Courses reg.');
-            $options[] = (object) array('value' => 'publishVWPP', 'text' => 'Publish VWPP Courses Final reg.');
-            $options[] = (object) array('value' => 'hideVWPP', 'text' => 'Hide VWPP Courses Finale reg.');
+            $options[] = (object) ['value' => 'lockVWPP', 'text' => 'Lock VWPP Courses reg.'];
+            $options[] = (object) ['value' => 'unlockVWPP', 'text' => 'Unlock VWPP Courses reg.'];
+            $options[] = (object) ['value' => 'publishVWPP', 'text' => 'Publish VWPP Courses Final reg.'];
+            $options[] = (object) ['value' => 'hideVWPP', 'text' => 'Hide VWPP Courses Finale reg.'];
         }
         if (in_array(17, $user->access)) {
-            $options[] = (object) array('value' => 'publishUnivReg', 'text' => 'Publish Univ. reg.');
-            $options[] = (object) array('value' => 'hideUnivReg', 'text' => 'Hide Univ. reg.');
+            $options[] = (object) ['value' => 'publishUnivReg', 'text' => 'Publish Univ. reg.'];
+            $options[] = (object) ['value' => 'hideUnivReg', 'text' => 'Hide Univ. reg.'];
         }
 
         // View
@@ -149,7 +149,7 @@ class StudentController extends Controller
     {
         $student_ids = join(',', $request->students);
 
-        $students = array();
+        $students = [];
         foreach (Student::findMine()->whereIn('id', $request->students) as $student) {
             $students[] = $student->display_name;
         }
@@ -204,10 +204,10 @@ class StudentController extends Controller
 
         $students = Student::findMine()->whereIn('id', $ids);
 
-        $data = (object) array(
+        $data = (object) [
             'subject' => $request->subject,
             'message' => $request->message,
-        );
+        ];
 
         foreach($students as $student) {
             try {
@@ -257,22 +257,22 @@ class StudentController extends Controller
         $univ_reg = UnivReg3::findMe();
         $french_univ = $univ_reg ? $univ_reg->university : null;
 
-        $months = array(
-            (object) array( 'id' => '01', 'name' => 'January'),
-            (object) array( 'id' => '02', 'name' => 'Febuary'),
-            (object) array( 'id' => '03', 'name' => 'March'),
-            (object) array( 'id' => '04', 'name' => 'April'),
-            (object) array( 'id' => '05', 'name' => 'May'),
-            (object) array( 'id' => '06', 'name' => 'June'),
-            (object) array( 'id' => '07', 'name' => 'July'),
-            (object) array( 'id' => '08', 'name' => 'August'),
-            (object) array( 'id' => '09', 'name' => 'September'),
-            (object) array( 'id' => '10', 'name' => 'October'),
-            (object) array( 'id' => '11', 'name' => 'November'),
-            (object) array( 'id' => '12', 'name' => 'December'),
-        );
+        $months = [
+            (object) [ 'id' => '01', 'name' => 'January'],
+            (object) [ 'id' => '02', 'name' => 'Febuary'],
+            (object) [ 'id' => '03', 'name' => 'March'],
+            (object) [ 'id' => '04', 'name' => 'April'],
+            (object) [ 'id' => '05', 'name' => 'May'],
+            (object) [ 'id' => '06', 'name' => 'June'],
+            (object) [ 'id' => '07', 'name' => 'July'],
+            (object) [ 'id' => '08', 'name' => 'August'],
+            (object) [ 'id' => '09', 'name' => 'September'],
+            (object) [ 'id' => '10', 'name' => 'October'],
+            (object) [ 'id' => '11', 'name' => 'November'],
+            (object) [ 'id' => '12', 'name' => 'December'],
+        ];
 
-        $years = array(date("Y") - 15, date("Y") - 30);
+        $years = [date("Y") - 15, date("Y") - 30];
 
         $states = StateHelper::get();
         $countries = CountryHelper::get();
@@ -356,11 +356,11 @@ class StudentController extends Controller
 
             if ($users->isNotEmpty()) {
 
-                $data = (object) array(
+                $data = (object) [
                     'firstname' => $request->firstname,
                     'lastname' => $request->lastname,
                     'cellphone' => $request->cellphone,
-                );
+                ];
 
                 foreach($users as $user) {
                     try {
@@ -440,16 +440,16 @@ class StudentController extends Controller
                     $student->university = $university;
                     $student->guest = $elem[3] ?? null;
                     $student->semester = session('semester');
-                    $student->semesters = array(session('semester'));
+                    $student->semesters = [session('semester')];
                     $student->save();
 
                     // Email data
-                    $email_data[] = (object) array(
+                    $email_data[] = (object) [
                         'lastname' => $elem[0],
                         'firstname' => $elem[1],
                         'email' => $elem[2],
                         'visiting' => !empty($elem[3]) ? 'Visiting' : null,
-                    );
+                    ];
                 }
             } catch(\Exception $e) {
                 report($e);

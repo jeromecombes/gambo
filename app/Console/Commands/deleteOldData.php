@@ -66,31 +66,31 @@ class deleteOldData extends Command
         }
 
         // Tables that contain the semester field
-        $models = array(
-            'App\Models\RHCourse',
-            'App\Models\RHCourseAssignment',
-            'App\Models\CourseChoice',
-            'App\Models\RHCoursePublish',
-            'App\Models\RHCourseLock',
-            'App\Models\UnivCourse',
-            'App\Models\Dates',
-            'App\Models\Evaluation',
-            'App\Models\EvaluationEnabled',
-            'App\Models\Grade',
-            'App\Models\Housing',
-            'App\Models\HousingTerm',
-            'App\Models\HousingAssignment',
-            'App\Models\HousingClosed',
-            'App\Models\Internship',
-            'App\Models\Student',
-            'App\Models\Tutoring',
-            'App\Models\UnivReg',
-            'App\Models\UnivReg2',
-            'App\Models\UnivReg3',
-            'App\Models\UnivRegLock',
-            'App\Models\UnivRegShow',
-            'App\Models\UnivReg',
-        );
+        $models = [
+            \App\Models\RHCourse::class,
+            \App\Models\RHCourseAssignment::class,
+            \App\Models\CourseChoice::class,
+            \App\Models\RHCoursePublish::class,
+            \App\Models\RHCourseLock::class,
+            \App\Models\UnivCourse::class,
+            \App\Models\Dates::class,
+            \App\Models\Evaluation::class,
+            \App\Models\EvaluationEnabled::class,
+            \App\Models\Grade::class,
+            \App\Models\Housing::class,
+            \App\Models\HousingTerm::class,
+            \App\Models\HousingAssignment::class,
+            \App\Models\HousingClosed::class,
+            \App\Models\Internship::class,
+            \App\Models\Student::class,
+            \App\Models\Tutoring::class,
+            \App\Models\UnivReg::class,
+            \App\Models\UnivReg2::class,
+            \App\Models\UnivReg3::class,
+            \App\Models\UnivRegLock::class,
+            \App\Models\UnivRegShow::class,
+            \App\Models\UnivReg::class,
+        ];
 
         foreach ($models as $model) {
             if ($verbos) {
@@ -99,7 +99,7 @@ class deleteOldData extends Command
 
             for ($current = 2011; $current < $year; $current++) {
 
-                foreach (array('Spring ', 'Fall ') as $elem) {
+                foreach (['Spring ', 'Fall '] as $elem) {
                     $semester = $elem . $current;
 
                     $model::where('semester', $semester)
@@ -113,7 +113,7 @@ class deleteOldData extends Command
         $students = Student::all();
         $max = $students->max('id');
 
-        $deleted_students = array();
+        $deleted_students = [];
 
         for ($i = 1; $i < $max; $i++) {
             if (!$students->find($i)) {
@@ -128,7 +128,7 @@ class deleteOldData extends Command
         $documents = Document::all();
         $max = $documents->max('id');
 
-        $deleted_documents = array();
+        $deleted_documents = [];
 
         for ($i = 1; $i < $max; $i++) {
             if (!$documents->find($i)) {
@@ -175,7 +175,7 @@ class deleteOldData extends Command
         $hosts = HostAvailable::all();
         $max = Host::max('id');
 
-        $deleted_hosts = array();
+        $deleted_hosts = [];
 
         for ($i = 1; $i < $max; $i++) {
             if (!$hosts->where('logement_id', $i)->first()) {
