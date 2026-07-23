@@ -67,6 +67,6 @@ class LockController extends Controller
         $model->lock = $lock;
         $model->save();
 
-        echo json_encode(array('error'=>false, 'button' => $button));
+        echo json_encode(['error'=>false, 'button' => $button]);
     }
 }

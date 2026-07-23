@@ -29,7 +29,7 @@ class TripController extends Controller
         // All existing students courses for making links
         $student = Student::find(session('student'));
 
-        $trip = (object) array(
+        $trip = (object) [
             'lastname' => $student->lastname,
             'firstname' => $student->firstname,
             'email' => $student->email,
@@ -43,7 +43,7 @@ class TripController extends Controller
             'parents_notification' => null,
             'university_notification' => null,
             'terms' => null,
-        );
+        ];
 
         // View
         return view('trip.edit', compact('edit', 'trip'));

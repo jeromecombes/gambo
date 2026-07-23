@@ -69,7 +69,7 @@ class UserController extends Controller
             $password_attributes['disabled'] = 'disabled';
         }
 
-        $accesses = array(
+        $accesses = [
             [1, 'Voir les infos générales'],
             [2, 'Voir les Housings'],
             [3, 'Voir les documents'],
@@ -93,7 +93,7 @@ class UserController extends Controller
             [19, 'Voir et modifier les Notes US'],
             [21, 'Bloc-notes des cours'],
             [24, 'Modifier les dates (1ère page)'],
-        );
+        ];
 
         // View
         return view('user.edit', compact('user', 'accesses', 'password_attributes'));

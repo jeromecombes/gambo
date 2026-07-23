@@ -18,7 +18,7 @@ class HostAvailable extends MyModel
 
         $semester = $semester ?? session('semester');
 
-        $this->semester = str_replace(array('Spring', 'Fall'), array('1', '2'), preg_replace('/(\w+) (\d+)/', "$2$1", $semester));
+        $this->semester = str_replace(['Spring', 'Fall'], ['1', '2'], preg_replace('/(\w+) (\d+)/', "$2$1", $semester));
 
         $hosts_available = $this::where(function ($query) {
             $query->where('end', '>=', $this->semester)
@@ -26,7 +26,7 @@ class HostAvailable extends MyModel
             })->where('start', '<=', $this->semester)
             ->get();
 
-        $hosts_ids = array();
+        $hosts_ids = [];
 
         foreach ($hosts_available as $h) {
             $hosts_ids[] = $h->logement_id;
@@ -43,7 +43,7 @@ class HostAvailable extends MyModel
 
     public function setStartAttribute($value)
     {
-        $this->attributes['start'] = str_replace(array('Spring', 'Fall'), array('1', '2'), preg_replace('/(\w+) (\d+)/', "$2$1", $value));
+        $this->attributes['start'] = str_replace(['Spring', 'Fall'], ['1', '2'], preg_replace('/(\w+) (\d+)/', "$2$1", $value));
     }
 
     public function setEndAttribute($value)

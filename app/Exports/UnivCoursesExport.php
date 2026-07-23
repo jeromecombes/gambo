@@ -12,7 +12,7 @@ class UnivCoursesExport implements FromArray
     public function array(): array
     {
         // Fields to display
-        $fields = array(
+        $fields = [
             ['institution', 'Institution'],
             ['discipline', 'Discipline'],
             ['niveau', 'Niveau'],
@@ -29,7 +29,7 @@ class UnivCoursesExport implements FromArray
             ['modalites2', 'Modalités 2'],
             ['student_lastname', 'Student Lastname'],
             ['student_firstname', 'Student Firstname'],
-        );
+        ];
 
         // Get students and courses
         $students = Student::findMine();
@@ -40,8 +40,8 @@ class UnivCoursesExport implements FromArray
 
         // Main courses (all courses which are not linked to another one)
         // and Extra courses (courses which are linked to another one)
-        $main = array();
-        $extra = array();
+        $main = [];
+        $extra = [];
         foreach ($courses as $course) {
             if (!$course->linkedTo) {
                 $main[$course->id] = $course;
@@ -57,7 +57,7 @@ class UnivCoursesExport implements FromArray
         uasort($main, function($a, $b) { return $a->institution > $b->institution; });
 
         // Link extra courses to main courses
-        $data = array();
+        $data = [];
         foreach ($main as $elem) {
             $data[] = $elem;
             if (array_key_exists($elem->id, $extra)) {
@@ -67,8 +67,8 @@ class UnivCoursesExport implements FromArray
             }
         }
 
-        $all = array();
-        $line = array();
+        $all = [];
+        $line = [];
         foreach ($fields as $field) {
             $line[] = $field[1];
         }
@@ -76,7 +76,7 @@ class UnivCoursesExport implements FromArray
         $all[] = $line;
 
         foreach ($data as $elem) {
-            $line = array();
+            $line = [];
             foreach ($fields as $field) {
                 if (substr($field[0], 0, 8) == 'student_') {
                     $key = substr($field[0], 8);

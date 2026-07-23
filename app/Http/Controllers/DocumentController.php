@@ -24,7 +24,7 @@ class DocumentController extends Controller
      */
     public function add()
     {
-        $document_types = array_merge(array(''), explode(',', getenv('DOCUMENT_TYPES')));
+        $document_types = array_merge([''], explode(',', getenv('DOCUMENT_TYPES')));
         sort($document_types);
 
         return view('documents.add', compact('document_types'));
@@ -60,7 +60,7 @@ class DocumentController extends Controller
     public function store(Request $request)
     {
         // New uploads
-        $files = array();
+        $files = [];
 
         for ($i=0; $i<5; $i++) {
             $file = $request->file('file'.$i);
@@ -295,10 +295,10 @@ class DocumentController extends Controller
     {
         $documents = $this->get();
 
-        $document_types = array_merge(array(''), explode(',', getenv('DOCUMENT_TYPES')));
+        $document_types = array_merge([''], explode(',', getenv('DOCUMENT_TYPES')));
         sort($document_types);
 
-        $tmp = array();
+        $tmp = [];
         foreach ($document_types as $elem) {
             $tmp[$elem] = $elem;
         }

@@ -31,25 +31,25 @@ class CoursesExport implements FromArray
             $courses[$k]['students'] = $tab;
         }
 
-        $header[] = array('Type', 'Code', 'Title', 'French title', 'Professor', 'Student Lastname', 'Student Firstname', 'Student e-mail');
+        $header[] = ['Type', 'Code', 'Title', 'French title', 'Professor', 'Student Lastname', 'Student Firstname', 'Student e-mail'];
 
-        $data = array();
+        $data = [];
         foreach ($courses as $course) {
             if (empty($course['students'])) {
-                $data[] = array(
+                $data[] = [
                     __($course->type),
                     $course->code,
                     $course->title,
                     $course->nom,
                     $course->professor,
-                );
+                ];
             } else {
                 foreach ($course['students'] as $student) {
                     if (!$students->find($student)) {
                         continue;
                     }
 
-                    $data[] = array(
+                    $data[] = [
                         __($course->type),
                         $course->code,
                         $course->title,
@@ -58,7 +58,7 @@ class CoursesExport implements FromArray
                         $students->find($student)->lastname,
                         $students->find($student)->firstname,
                         $students->find($student)->email,
-                    );
+                    ];
                 }
             }
         }

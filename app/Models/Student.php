@@ -11,7 +11,7 @@ class Student extends MyModel
 
     public function getAddressAttribute($value)
     {
-        $tab = array();
+        $tab = [];
 
         if ($this->street) {
             $tab[] = $this->street;
@@ -427,7 +427,7 @@ class Student extends MyModel
         }
 
         if (is_string($fields)) {
-            $tab = array();
+            $tab = [];
             foreach ($students as $student) {
                 $tab[] = $student->$fields;
             }

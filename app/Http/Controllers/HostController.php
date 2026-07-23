@@ -179,7 +179,7 @@ class HostController extends Controller
     {
         $host_ids = join(',', $request->hosts);
 
-        $hosts = array();
+        $hosts = [];
         foreach (Host::whereIn('id', $request->hosts)->get() as $host) {
             $hosts[] = $host->display_name;
         }
@@ -205,10 +205,10 @@ class HostController extends Controller
 
         $hosts = Host::whereIn('id', $ids)->get();
 
-        $data = (object) array(
+        $data = (object) [
             'subject' => $request->subject,
             'message' => $request->message,
-        );
+        ];
 
         foreach($hosts as $host) {
             if ($host->email) {

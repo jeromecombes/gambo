@@ -23,20 +23,20 @@ class UnivRegExport implements FromArray
         $univ_reg = UnivReg::where('semester', session('semester'))->get();
         $univ_reg3 = UnivReg3::where('semester', session('semester'))->get();
 
-        $header1[] = array(
+        $header1[] = [
             'Lastname',
             'Firstname',
             'Major 1',
             'Minor 1',
             'Major 2',
             'Minor 2',
-        );
+        ];
 
         foreach ($partners as $partner) {
             $header1[] = $partner->name;
         }
 
-        $header2 = array(
+        $header2 = [
             'Justification',
             'Motivated by the calendar',
             'Final Reg.',
@@ -48,15 +48,15 @@ class UnivRegExport implements FromArray
             'Start college',
             'Disability or special needs',
             'Details',
-        );
+        ];
 
         $header = array_merge($header1, $header2);
 
-        $data = array();
+        $data = [];
 
         foreach ($students as $student) {
 
-            $data[] = array(
+            $data[] = [
                 $student->lastname,
                 $student->firstname,
                 $univ_reg->where('student', $student->id)->where('question', '10')->first()->response ?? null,
@@ -79,7 +79,7 @@ class UnivRegExport implements FromArray
                 $univ_reg->where('student', $student->id)->where('question', '6')->first()->response ?? null,
                 $univ_reg->where('student', $student->id)->where('question', '7')->first()->response ?? null,
                 $univ_reg->where('student', $student->id)->where('question', '8')->first()->response ?? null,
-            );
+            ];
         }
 
         usort($data, function($a, $b) { return $a[0].$a[1] > $b[0].$b[1]; });

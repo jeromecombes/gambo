@@ -52,7 +52,7 @@ class UnivRegController extends Controller
             $tab[$student->id]['firstname'] = $student->firstname;
 
             $tab[$student->id][0] = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
-            $tab[$student->id][1] = array(null, null, null, null, null, null, null, null, null, null, null, null);
+            $tab[$student->id][1] = [null, null, null, null, null, null, null, null, null, null, null, null];
             $tab[$student->id][2] = null;
           }
 
@@ -122,7 +122,7 @@ class UnivRegController extends Controller
         // Get student form
         $univ_reg = UnivReg::getMe();
 
-        $answer = array();
+        $answer = [];
         for ($i=0; $i <= 25; $i++) {
             $answer[$i] = null;
         }
@@ -133,7 +133,7 @@ class UnivRegController extends Controller
         // Get student extra form (before 2019)
         $univ_reg_plus = UnivReg2::getMe();
 
-        $answer_plus = array();
+        $answer_plus = [];
         for ($i=0; $i <= 16; $i++) {
             $answer_plus[$i] = null;
         }
@@ -161,13 +161,13 @@ class UnivRegController extends Controller
     public function univ_reg3_update(Request $request)
     {
         UnivReg3::updateOrCreate(
-            array(
+            [
                 'student' => session('student'),
                 'semester' => session('semester'),
-            ),
-            array(
+            ],
+            [
                 'university' => $request->university,
-            )
+            ]
         );
 
         return redirect("/univ_reg")->with('success', 'Mise à jour réussie');

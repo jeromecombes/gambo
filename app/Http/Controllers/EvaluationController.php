@@ -75,15 +75,15 @@ class EvaluationController extends Controller
         // Get closed evaluations
         $evaluations = Evaluation::getMe();
 
-        $closed = (object) array(
+        $closed = (object) [
             'internship' => count($evaluations->where('form', 'internship')->where('closed', 1)),
             'linguistic' => count($evaluations->where('form', 'linguistic')->where('closed', 1)),
             'method' => count($evaluations->where('form', 'method')->where('closed', 1)),
             'program' => count($evaluations->where('form', 'program')->where('closed', 1)),
             'tutoring' => count($evaluations->where('form', 'tutoring')->where('closed', 1)),
-            'local' => array(),
-            'univ' => array(),
-        );
+            'local' => [],
+            'univ' => [],
+        ];
 
         // Get closed evaluations for local courses
         foreach ($courses->local as $course) {
@@ -115,7 +115,7 @@ class EvaluationController extends Controller
         $form = $request->form;
 
         // Initialisation of $data
-        $data = array();
+        $data = [];
         for ($i = 0; $i < 60; $i++) {
             $data[$i] = null;
         }
@@ -153,12 +153,12 @@ class EvaluationController extends Controller
 
         switch ($form) {
             case 'linguistic' :
-                $view = (object) array(
+                $view = (object) [
                     'course_id' => 0,
                     'form' => $form,
                     'title' => 'Ateliers Linguistiques',
                     'subtitle' => "La grammaire et syntaxe, la phonétique, l'interculturel",
-                );
+                ];
 
                 return view('evaluations.workshop', compact('data', 'edit', 'view'));
 
@@ -181,12 +181,12 @@ class EvaluationController extends Controller
                 break;
 
             case 'method' :
-                $view = (object) array(
+                $view = (object) [
                     'course_id' => 0,
                     'form' => $form,
                     'title' => 'Ateliers Méthodologiques',
                     'subtitle' => "La dissertation, le commentaire composé, l'exposé oral",
-                );
+                ];
 
                 return view('evaluations.workshop', compact('data', 'edit', 'view'));
 
@@ -336,7 +336,7 @@ class EvaluationController extends Controller
             ->get();
 
         // Initialisation of $data
-        $data = array();
+        $data = [];
 
         if (count($evaluation)) {
             foreach ($evaluation as $elem) {
@@ -429,7 +429,7 @@ class EvaluationController extends Controller
             ->get();
 
         // Count evaluations
-        $evaluations = array();
+        $evaluations = [];
 
         foreach ($students as $student) {
             $local_total = 0;

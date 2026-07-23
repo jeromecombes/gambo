@@ -66,7 +66,7 @@ class deleteOldData extends Command
         }
 
         // Tables that contain the semester field
-        $models = array(
+        $models = [
             'App\Models\RHCourse',
             'App\Models\RHCourseAssignment',
             'App\Models\CourseChoice',
@@ -90,7 +90,7 @@ class deleteOldData extends Command
             'App\Models\UnivRegLock',
             'App\Models\UnivRegShow',
             'App\Models\UnivReg',
-        );
+        ];
 
         foreach ($models as $model) {
             if ($verbos) {
@@ -99,7 +99,7 @@ class deleteOldData extends Command
 
             for ($current = 2011; $current < $year; $current++) {
 
-                foreach (array('Spring ', 'Fall ') as $elem) {
+                foreach (['Spring ', 'Fall '] as $elem) {
                     $semester = $elem . $current;
 
                     $model::where('semester', $semester)
@@ -113,7 +113,7 @@ class deleteOldData extends Command
         $students = Student::all();
         $max = $students->max('id');
 
-        $deleted_students = array();
+        $deleted_students = [];
 
         for ($i = 1; $i < $max; $i++) {
             if (!$students->find($i)) {
@@ -128,7 +128,7 @@ class deleteOldData extends Command
         $documents = Document::all();
         $max = $documents->max('id');
 
-        $deleted_documents = array();
+        $deleted_documents = [];
 
         for ($i = 1; $i < $max; $i++) {
             if (!$documents->find($i)) {
@@ -175,7 +175,7 @@ class deleteOldData extends Command
         $hosts = HostAvailable::all();
         $max = Host::max('id');
 
-        $deleted_hosts = array();
+        $deleted_hosts = [];
 
         for ($i = 1; $i < $max; $i++) {
             if (!$hosts->where('logement_id', $i)->first()) {
