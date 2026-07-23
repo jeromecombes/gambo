@@ -166,7 +166,7 @@ return [
         /*
          * Package Service Providers...
          */
-        Barryvdh\Debugbar\ServiceProvider::class,
+        Fruitcake\LaravelDebugbar\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Spatie\Html\HtmlServiceProvider::class,
 
