@@ -11,7 +11,7 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
         <!-- Styles -->
-        <link href="{{ asset('css/app.css') }}?rev=20210330" rel="stylesheet">
+        @vite('resources/css/app.css')
         <link href="{{ asset('js/DataTables/datatables.min.css') }}?rev=20250530" rel="stylesheet">
         <link href="{{ asset('css/style.css') }}?rev=20250530" rel="stylesheet">
         <link href="{{ asset('css/print.css') }}?rev=20210330" rel="stylesheet" media="print">

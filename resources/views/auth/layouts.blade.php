@@ -7,7 +7,7 @@
 
       <title>VWPP Database</title>
 
-      <link href="{{ asset('css/app.css') }}?rev=20210330" rel="stylesheet">
+      @vite('resources/css/app.css')
       <link href="{{ asset('css/style.css') }}?rev=20210330" rel="stylesheet">
       <link rel='shortcut icon' href="{{ asset('favicon.ico') }}" type='image/x-icon' />
   </head>
