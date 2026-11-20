@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\MyModel;
+use Illuminate\Support\Facades\Crypt;
 
 class HousingAssignment extends MyModel
 {
@@ -29,12 +30,12 @@ class HousingAssignment extends MyModel
 
     public function getLastnameAttribute($value)
     {
-        return $this->decrypt($value, false);
+        return $value === null ? $value : Crypt::decryptString($value);
     }
 
     public function getFirstnameAttribute($value)
     {
-        return $this->decrypt($value, false);
+        return $value === null ? $value : Crypt::decryptString($value);
     }
 
     public function getStudentnameAttribute()

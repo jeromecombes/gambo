@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\MyModel;
+use Illuminate\Support\Facades\Crypt;
 
 class Internship extends MyModel
 {
@@ -16,27 +17,23 @@ class Internship extends MyModel
      */
     protected $fillable = ['internship', 'semester', 'student', 'lock'];
 
+    /**
+     * @var array
+     */
+    protected $casts = [
+        'notes' => 'encrypted',
+        'stage' => 'encrypted',
+    ];
+
     // Get
     public function getNameAttribute($value)
     {
-        return $this->decrypt($this->stage, $this->student);
+        return $this->stage;
     }
-
-    public function getNotesAttribute($value)
-    {
-        return $this->decrypt($value, $this->student);
-    }
-
 
     // Set
     public function setNameAttribute($value)
     {
-        $this->attributes['stage'] = $this->encrypt($value, $this->student);
+        $this->attributes['stage'] = $value === null ? $value : Crypt::encryptString($value);
     }
-
-    public function setNotesAttribute($value)
-    {
-        $this->attributes['notes'] = $this->encrypt($value, $this->student);
-    }
-
 }

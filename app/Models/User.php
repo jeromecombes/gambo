@@ -8,14 +8,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Fortify\TwoFactorAuthenticatable;
-use App\Http\Traits\CryptTrait;
 use App\Mail\Send2FACode;
 use App\Models\Student;
 use Exception;
+use Illuminate\Support\Facades\Crypt;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, TwoFactorAuthenticatable, CryptTrait;
+    use HasFactory, Notifiable, TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -72,7 +72,7 @@ class User extends Authenticatable
     public function getFirstnameAttribute($value)
     {
         if ($this->admin) {
-            return $this->decrypt($value, false);
+            return $value === null ? $value : Crypt::decryptString($value);
         } else {
             return Student::where('user_id', $this->id)->first()->firstname ?? null;
         }
@@ -86,7 +86,7 @@ class User extends Authenticatable
     public function getLastnameAttribute($value)
     {
         if ($this->admin) {
-            return $this->decrypt($value, false);
+            return $value === null ? $value : Crypt::decryptString($value);
         } else {
             return Student::where('user_id', $this->id)->first()->lastname ?? null;
         }
@@ -94,12 +94,12 @@ class User extends Authenticatable
 
     public function setFirstnameAttribute($value)
     {
-        $this->attributes['firstname'] = $this->encrypt($value, false);
+        $this->attributes['firstname'] = $value === null ? $value : Crypt::encryptString($value);
     }
 
     public function setLastnameAttribute($value)
     {
-        $this->attributes['lastname'] = $this->encrypt($value, false);
+        $this->attributes['lastname'] = $value === null ? $value : Crypt::encryptString($value);
     }
 
     /**

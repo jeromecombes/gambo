@@ -2,24 +2,19 @@
 
 namespace App\Models;
 
-use App\Http\Traits\CryptTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Document extends Model
 {
-    use CryptTrait;
+    /**
+     * @var array
+     */
+    protected $casts = [
+        'firstname' => 'encrypted',
+        'lastname' => 'encrypted',
+    ];
 
     public $timestamps = false;
-
-    public function getFirstnameAttribute($value)
-    {
-        return $this->decrypt($value, null);
-    }
-
-    public function getLastnameAttribute($value)
-    {
-        return $this->decrypt($value, null);
-    }
 
     public function getNameAttribute($value)
     {
