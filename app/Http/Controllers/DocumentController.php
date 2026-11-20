@@ -381,32 +381,6 @@ class DocumentController extends Controller
     }
 
     /**
-     * Old decrypt function
-     *
-     * @param  String $crypted_token
-     * @param  String $key
-     * @return String $decrypted_token
-     */
-    public function old_decrypt(String $crypted_token, String $key=null)
-    {
-        if($crypted_token === null){
-            return null;
-        }
-
-        $decrypted_token = false;
-
-        if(preg_match("/^(.*)::(.*)$/", $crypted_token, $regs)) {
-            // decrypt encrypted string
-            list(, $crypted_token, $enc_iv) = $regs;
-            $enc_method = 'AES-128-CTR';
-            $enc_key = openssl_digest($key.'1A30FA887BF404DA8B8477B1', 'SHA256', TRUE);
-            $decrypted_token = openssl_decrypt($crypted_token, $enc_method, $enc_key, 0, hex2bin($enc_iv));
-            unset($crypted_token, $enc_method, $enc_key, $enc_iv, $regs);
-        }
-        return $decrypted_token;
-    }
-
-    /**
      * Export all files for selected semester
      *
      * @param  \Illuminate\Http\Request  $request
