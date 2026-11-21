@@ -4,7 +4,6 @@ use App\Helpers\LegacyEncryption;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Migrations\Migration;
-use RuntimeException;
 
 class ReencryptLegacyEncryptedColumns extends Migration
 {
@@ -148,7 +147,7 @@ class ReencryptLegacyEncryptedColumns extends Migration
      *
      * @return void
      *
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     private function requireStrictMode()
     {
