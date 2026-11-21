@@ -4,12 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
-use App\Http\Traits\CryptTrait;
 
 class MyModel extends Model
 {
-
-    use CryptTrait;
 
     protected function getMe()
     {

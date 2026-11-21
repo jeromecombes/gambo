@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\MyModel;
+use Illuminate\Support\Facades\Crypt;
 
 class Evaluation extends MyModel
 {
@@ -12,11 +13,12 @@ class Evaluation extends MyModel
      */
     protected $fillable = ['closed', 'courseId', 'form', 'question', 'semester', 'student', 'timestamp'];
 
-    // Get
-    public function getResponseAttribute($value)
-    {
-        return $this->decrypt($value, $this->student);
-    }
+    /**
+     * @var array
+     */
+    protected $casts = [
+        'response' => 'encrypted',
+    ];
 
     // Set
     public function setResponseAttribute($value)
@@ -25,7 +27,7 @@ class Evaluation extends MyModel
             $value = json_encode($value);
         }
 
-        $this->attributes['response'] = $this->encrypt($value, $this->student);
+        $this->attributes['response'] = $value === null ? $value : Crypt::encryptString($value);
     }
 
     public function links()

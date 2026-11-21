@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\MyModel;
+use Illuminate\Support\Facades\Crypt;
 
 class RHCourse extends MyModel
 {
@@ -16,50 +17,24 @@ class RHCourse extends MyModel
      */
     protected $fillable = ['type', 'semester'];
 
+    /**
+     * @var array
+     */
+    protected $casts = [
+        'code' => 'encrypted',
+        'day' => 'encrypted',
+        'debut' => 'encrypted',
+        'fin' => 'encrypted',
+        'nom' => 'encrypted',
+        'professor' => 'encrypted',
+        'title' => 'encrypted',
+        'univ' => 'encrypted',
+    ];
+
     // Get
-    public function getProfessorAttribute($value)
-    {
-        return $this->decrypt($value, false);
-    }
-
-    public function getTitleAttribute($value)
-    {
-        return $this->decrypt($value, false);
-    }
-
-    public function getUnivAttribute($value)
-    {
-        return $this->decrypt($value, false);
-    }
-
-    public function getNomAttribute($value)
-    {
-        return $this->decrypt($value, false);
-    }
-
-    public function getCodeAttribute($value)
-    {
-        return $this->decrypt($value, false);
-    }
-
-    public function getDebutAttribute($value)
-    {
-        return $this->decrypt($value, false);
-    }
-
-    public function getFinAttribute($value)
-    {
-        return $this->decrypt($value, false);
-    }
-
     public function getNameAttribute($value)
     {
         return $this->title;
-    }
-
-    public function getDayAttribute($value)
-    {
-        return $this->decrypt($value, false);
     }
 
     public function getStartAttribute($value)
@@ -73,45 +48,13 @@ class RHCourse extends MyModel
     }
 
     // Set
-
-    public function setCodeAttribute($value)
+    public function setStartAttribute($value)
     {
-        $this->attributes['code'] = $this->encrypt($value, false);
-    }
-
-    public function setDayAttribute($value)
-    {
-        $this->attributes['day'] = $this->encrypt($value, false);
+        $this->attributes['debut'] = $value === null ? $value : Crypt::encryptString($value);
     }
 
     public function setEndAttribute($value)
     {
-        $this->attributes['fin'] = $this->encrypt($value, false);
+        $this->attributes['fin'] = $value === null ? $value : Crypt::encryptString($value);
     }
-
-    public function setNameAttribute($value)
-    {
-        $this->attributes['title'] = $this->encrypt($value, false);
-    }
-
-    public function setNomAttribute($value)
-    {
-        $this->attributes['nom'] = $this->encrypt($value, false);
-    }
-
-    public function setProfessorAttribute($value)
-    {
-        $this->attributes['professor'] = $this->encrypt($value, false);
-    }
-
-    public function setStartAttribute($value)
-    {
-        $this->attributes['debut'] = $this->encrypt($value, false);
-    }
-
-    public function setTitleAttribute($value)
-    {
-        $this->attributes['title'] = $this->encrypt($value, false);
-    }
-
 }
