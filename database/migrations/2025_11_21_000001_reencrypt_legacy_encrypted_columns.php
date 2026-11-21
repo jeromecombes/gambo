@@ -4,6 +4,7 @@ use App\Helpers\LegacyEncryption;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Migrations\Migration;
+use RuntimeException;
 
 class ReencryptLegacyEncryptedColumns extends Migration
 {
@@ -118,6 +119,8 @@ class ReencryptLegacyEncryptedColumns extends Migration
      */
     public function up()
     {
+        $this->requireStrictMode();
+
         $this->reencrypt('students', 'id', $this->students_keyed_by_id);
 
         foreach ($this->null_key_columns as $table => $columns) {
@@ -136,6 +139,31 @@ class ReencryptLegacyEncryptedColumns extends Migration
      */
     public function down()
     {
+    }
+
+    /**
+     * Abort unless strict SQL mode is enabled, so that oversized values
+     * (Crypt ciphertexts are longer than legacy ones) raise an error
+     * instead of being silently truncated.
+     *
+     * @return void
+     *
+     * @throws \RuntimeException
+     */
+    private function requireStrictMode()
+    {
+        if (! in_array(DB::connection()->getDriverName(), ['mysql', 'mariadb'])) {
+            return;
+        }
+
+        $mode = DB::selectOne('select @@SESSION.sql_mode as mode')->mode;
+
+        if (! str_contains($mode, 'STRICT_TRANS_TABLES') && ! str_contains($mode, 'STRICT_ALL_TABLES')) {
+            throw new RuntimeException(
+                'Strict SQL mode is required to run this migration: enable STRICT_TRANS_TABLES '
+                . 'or widen the encrypted columns (e.g. to mediumtext) before re-encrypting.'
+            );
+        }
     }
 
     /**
