@@ -65,6 +65,33 @@ class ReencryptLegacyEncryptedColumns extends Migration
         ],
         'tutorat' => ['tuteur', 'day', 'start', 'end'],
         'documents' => ['firstname', 'lastname'],
+        'courses' => [
+            'code',
+            'day',
+            'debut',
+            'fin',
+            'nom',
+            'professor',
+            'title',
+            'univ',
+        ],
+        'courses_univ4' => [
+            'code',
+            'day',
+            'debut',
+            'discipline',
+            'email',
+            'fin',
+            'institution',
+            'institutionAutre',
+            'modalites',
+            'modalites1',
+            'modalites2',
+            'niveau',
+            'nom',
+            'prof',
+            'type',
+        ],
     ];
 
     /**
