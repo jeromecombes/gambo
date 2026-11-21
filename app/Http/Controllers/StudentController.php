@@ -84,7 +84,7 @@ class StudentController extends Controller
 
         foreach ($students as $key => $student) {
             $univ = $univ_reg->where('student', $student->id)->first();
-            $students[$key]->setUnivregAttribute($univ->university ?? null);
+            $students[$key]->univreg = $univ->university ?? null;
         }
 
         // Count students
