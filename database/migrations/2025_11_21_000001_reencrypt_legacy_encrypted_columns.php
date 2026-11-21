@@ -118,7 +118,7 @@ class ReencryptLegacyEncryptedColumns extends Migration
      */
     public function up()
     {
-        $this->requireStrictMode();
+        $this->requireAdequateColumnSizes();
 
         $this->reencrypt('students', 'id', $this->students_keyed_by_id);
 
@@ -141,28 +141,67 @@ class ReencryptLegacyEncryptedColumns extends Migration
     }
 
     /**
-     * Abort unless strict SQL mode is enabled, so that oversized values
-     * (Crypt ciphertexts are longer than legacy ones) raise an error
-     * instead of being silently truncated.
+     * Abort when a target column is too small to hold a Crypt ciphertext
+     * (~230-260 chars for short values vs ~80 for the legacy format).
+     * Widened columns make the re-encryption safe regardless of SQL mode.
      *
      * @return void
      *
      * @throws RuntimeException
      */
-    private function requireStrictMode()
+    private function requireAdequateColumnSizes()
     {
         if (! in_array(DB::connection()->getDriverName(), ['mysql', 'mariadb'])) {
             return;
         }
 
-        $mode = DB::selectOne('select @@SESSION.sql_mode as mode')->mode;
+        $tables = $this->encryptedTableColumns();
 
-        if (! str_contains($mode, 'STRICT_TRANS_TABLES') && ! str_contains($mode, 'STRICT_ALL_TABLES')) {
+        $rows = DB::select(
+            'SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH AS max_length
+             FROM information_schema.COLUMNS
+             WHERE TABLE_SCHEMA = DATABASE()'
+        );
+
+        $offending = [];
+
+        foreach ($rows as $row) {
+            if (! isset($tables[$row->TABLE_NAME]) || ! in_array($row->COLUMN_NAME, $tables[$row->TABLE_NAME])) {
+                continue;
+            }
+
+            if (in_array($row->DATA_TYPE, ['tinytext', 'tinyblob', 'char'])) {
+                $offending[] = "{$row->TABLE_NAME}.{$row->COLUMN_NAME} ({$row->DATA_TYPE})";
+            } elseif (in_array($row->DATA_TYPE, ['varchar', 'varbinary']) && (int) $row->max_length < 300) {
+                $offending[] = "{$row->TABLE_NAME}.{$row->COLUMN_NAME} ({$row->DATA_TYPE}({$row->max_length}))";
+            }
+        }
+
+        if ($offending !== []) {
             throw new RuntimeException(
-                'Strict SQL mode is required to run this migration: enable STRICT_TRANS_TABLES '
-                . 'or widen the encrypted columns (e.g. to mediumtext) before re-encrypting.'
+                'Encrypted columns too small to hold Crypt ciphertexts: '
+                . implode(', ', $offending)
+                . '. Widen them (e.g. ALTER TABLE ... MODIFY column mediumtext) before re-encrypting.'
             );
         }
+    }
+
+    /**
+     * All target tables with their encrypted columns.
+     *
+     * @return array
+     */
+    private function encryptedTableColumns()
+    {
+        $tables = $this->null_key_columns;
+
+        foreach ($this->student_keyed_columns as $table => $columns) {
+            $tables[$table] = array_merge($tables[$table] ?? [], $columns);
+        }
+
+        $tables['students'] = array_merge($tables['students'] ?? [], $this->students_keyed_by_id);
+
+        return $tables;
     }
 
     /**
